@@ -5,6 +5,17 @@ import { COLORS, WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
 import Spacer from '../Spacer';
 
+const VARIANTS = {
+  'on-sale': {
+    background: '#6868D9',
+    text: 'Sale',
+  },
+  'new-release': {
+    background: '#C5295D',
+    text: 'New release!',
+  },
+}
+
 const ShoeCard = ({
   slug,
   name,
@@ -30,11 +41,14 @@ const ShoeCard = ({
     : isNewShoe(releaseDate)
       ? 'new-release'
       : 'default'
+  const inputData = VARIANTS[variant];
 
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          {variant !== 'default' ? <SalePrice style={{ '--background': inputData.background }}>{inputData.text}</SalePrice> : null}
+
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
@@ -55,16 +69,22 @@ const Link = styled.a`
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  flex: 1;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -79,8 +99,14 @@ const ColorInfo = styled.p`
 `;
 
 const SalePrice = styled.span`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  border-radius: 2px;
+  padding: 8px 12px;
   font-weight: ${WEIGHTS.medium};
-  color: ${COLORS.primary};
+  color: ${COLORS.white};
+  background-color: var(--background);
 `;
 
 export default ShoeCard;

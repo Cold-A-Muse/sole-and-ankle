@@ -70,7 +70,6 @@ const Link = styled.a`
 `;
 
 const Wrapper = styled.article`
-  flex: 1;
 `;
 
 const ImageWrapper = styled.div`
